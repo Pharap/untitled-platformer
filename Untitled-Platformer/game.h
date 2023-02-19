@@ -1,5 +1,6 @@
 #pragma once
 #include <stdint.h>
+#include <Arduboy2.h>
 
 class Game
 {
@@ -17,8 +18,10 @@ class Game
         void update();
 
         void updateGame();
-        void drawGame();
+        void drawMap();
 
         void setup();
         void loop();
+
+        Arduboy2 arduboy;
 };
