@@ -1,3 +1,6 @@
-#include "tileType.h"
 #include "mapData.h"
-#include <stdint.h>
+
+namespace MapData
+{
+    uint8_t totalMaps = 1;
+}

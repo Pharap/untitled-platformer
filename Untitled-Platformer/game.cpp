@@ -2,11 +2,12 @@
 #include "tileType.h"
 #include "mapData.h"
 #include "sprites.h"
+#include "player.h"
+#include "camera.h"
 
 Arduboy2 arduboy;
 Game game;
 Game::GameState gameState;
-MapData mapData;
 
 void Game::setup()
 {
@@ -36,6 +37,9 @@ void Game::update()
         case GameState::Game:
             updateGame();
             drawMap();
+            player.updatePlayer();
+            player.drawPlayer();
+            camera.updateCamera();
                 break;
 
         case GameState::Gameover:
@@ -52,7 +56,7 @@ void Game::drawMap()
 {
     for(uint8_t tileY = 0; tileY < MapData::map0Height; ++tileY)
     {
-        int16_t drawY = ((tileY * tileHeight) - mapData.cameraY);
+        int16_t drawY = ((tileY * tileHeight) - camera.y);
 
         if ((drawY < -tileHeight) || (drawY > HEIGHT))
 
@@ -60,13 +64,13 @@ void Game::drawMap()
 
         for(uint8_t tileX = 0; tileX < MapData::map0Width; ++tileX)
         {
-            int16_t drawX = ((tileX * tileWidth) - mapData.cameraX);
+            int16_t drawX = ((tileX * tileWidth) - camera.x);
 
             if((drawX < -tileWidth) || (drawX > WIDTH))
 
                 continue;
 
-            TileType tileType = mapData.map0Data[tileY][tileX];
+            TileType tileType = static_cast<TileType>(pgm_read_byte(&MapData::map0Data[tileY][tileX]));
 
             uint8_t tileIndex = getTileIndex(tileType);
 

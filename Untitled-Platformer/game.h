@@ -6,6 +6,11 @@ class Game
 {
     private:
 
+        void update();
+
+        void updateGame();
+        void drawMap();
+
     public:
 
         enum class GameState : uint8_t
@@ -15,13 +20,10 @@ class Game
             Gameover
         };
 
-        void update();
-
-        void updateGame();
-        void drawMap();
-
         void setup();
         void loop();
 
         Arduboy2 arduboy;
 };
+
+extern Game game;

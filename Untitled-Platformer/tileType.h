@@ -4,7 +4,18 @@
 enum class TileType : uint8_t
 {
     Sky,
-    Ground
+    Ground,
+    GroundLeft,
+    GroundRight,
+    Tube,
+    Cap,
+    LeftWall,
+    RightWall,
+    PixelBoth,
+    PixelLeft,
+    PixelRight,
+    LeftWallRightPixel,
+    RightWallLeftPixel
 };
 
 constexpr uint8_t tileWidth = 8;

@@ -1,13 +1,11 @@
 #include "game.h"
 
-Game gameObj;
-
 void setup()
 {
-    gameObj.setup();
+    game.setup();
 }
 
 void loop()
 {
-    gameObj.loop();
+    game.loop();
 }
