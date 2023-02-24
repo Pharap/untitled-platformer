@@ -54,7 +54,7 @@ void Game::updateGame()
 
 void Game::drawMap()
 {
-    for(uint8_t tileY = 0; tileY < MapData::map0Height; ++tileY)
+    for(uint8_t tileY = 0; tileY < MapData::mapHeight[MapData::currentMapSize]; ++tileY)
     {
         int16_t drawY = ((tileY * tileHeight) - camera.y);
 
@@ -62,7 +62,7 @@ void Game::drawMap()
 
             continue;
 
-        for(uint8_t tileX = 0; tileX < MapData::map0Width; ++tileX)
+        for(uint8_t tileX = 0; tileX < MapData::mapWidth[MapData::currentMapSize]; ++tileX)
         {
             int16_t drawX = ((tileX * tileWidth) - camera.x);
 
