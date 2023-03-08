@@ -6,15 +6,14 @@
 namespace MapData
 {
     constexpr uint8_t totalMaps = 2;
-    extern uint8_t currentMapSize;
   
-    constexpr uint8_t mapWidth[totalMaps] = {24, 24};
-    constexpr uint8_t mapHeight[totalMaps] = {8, 8};
+    constexpr uint8_t mapWidth = 24;
+    constexpr uint8_t mapHeight = 8;
 
-    constexpr uint8_t fullMapWidth[totalMaps]; //= (mapWidth * tileWidth);
-    constexpr uint8_t fullMapHeight[totalMaps]; //= (mapHeight * tileHeight);
+    constexpr uint8_t fullMapWidth = (mapWidth * tileWidth);
+    constexpr uint8_t fullMapHeight = (mapHeight * tileHeight);
 
-    constexpr TileType map0Data[mapHeight[0]][mapWidth[0]] PROGMEM =
+    constexpr TileType map0Data[mapHeight][mapWidth] PROGMEM =
     {
         {
             TileType::Sky, TileType::Sky, TileType::Sky, TileType::Sky, TileType::Sky, TileType::Sky, TileType::Sky, TileType::Sky, TileType::Sky, TileType::Sky, TileType::Sky, TileType::Sky, TileType::Sky, TileType::Sky, TileType::Sky, TileType::Sky, TileType::Sky, TileType::Sky, TileType::Sky, TileType::Sky, TileType::Sky, TileType::Sky, TileType::Sky, TileType::Sky
@@ -42,7 +41,7 @@ namespace MapData
         }
     };
 
-    constexpr TileType map1Data[mapHeight[1]][mapWidth[1]] PROGMEM =
+    constexpr TileType map1Data[mapHeight][mapWidth] PROGMEM =
     {
         {
             TileType::Sky, TileType::Sky, TileType::Sky, TileType::Sky, TileType::Sky, TileType::Sky, TileType::Sky, TileType::Sky, TileType::Sky, TileType::Sky, TileType::Sky, TileType::Sky, TileType::Sky, TileType::Sky, TileType::Sky, TileType::Sky, TileType::Sky, TileType::Sky, TileType::Sky, TileType::Sky, TileType::Sky, TileType::Sky, TileType::Sky, TileType::Sky
@@ -70,5 +69,13 @@ namespace MapData
         }
     };
 
-    extern const TileType (*currentMapData)[24];
+    extern const TileType (*currentMapData)[mapWidth];
+
+    extern uint8_t width;
+    extern uint8_t height;
+
+    extern const TileType *data;
+
+    extern size_t getIndex(float x, float y);
+    extern TileType getTile(float x, float y);
 }

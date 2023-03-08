@@ -56,7 +56,7 @@ void Game::updateGame()
 
 void Game::drawMap()
 {
-    for(uint8_t tileY = 0; tileY < MapData::mapHeight[MapData::currentMapSize]; ++tileY)
+    for(uint8_t tileY = 0; tileY < MapData::mapHeight; ++tileY)
     {
         int16_t drawY = ((tileY * tileHeight) - camera.y);
 
@@ -64,7 +64,7 @@ void Game::drawMap()
 
             continue;
 
-        for(uint8_t tileX = 0; tileX < MapData::mapWidth[MapData::currentMapSize]; ++tileX)
+        for(uint8_t tileX = 0; tileX < MapData::mapWidth; ++tileX)
         {
             int16_t drawX = ((tileX * tileWidth) - camera.x);
 
@@ -72,7 +72,7 @@ void Game::drawMap()
 
                 continue;
 
-            TileType tileType = static_cast<TileType>(pgm_read_byte(&MapData::currentMapData[tileY][tileX]));
+             TileType tileType = readTileTypeFromProgmem(&MapData::currentMapData[tileY][tileX]);
 
             uint8_t tileIndex = getTileIndex(tileType);
 
