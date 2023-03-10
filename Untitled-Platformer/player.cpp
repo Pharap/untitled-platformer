@@ -40,52 +40,36 @@ void Player::updatePlayer()
 
     const int16_t leftX = ((newX - size) - 1);
 		
-		// Find which tile the player's new left side is in
 		const int16_t leftTileX = (leftX / tileWidth);
 
-		// Find the tile the player is trying to move into
 		const TileType leftTile = MapData::getTile(leftTileX, tileY);
 
-		// If the tile is solid
 		if(isSolid(leftTile))
 		{
-			// Adjust the player's position to prevent collision
-			newX = (((leftTileX + 1) * tileWidth) + size);
+			  newX = (((leftTileX + 1) * tileWidth) + size);
 		}
 
-		// Find the x coordinate of the player's new bottom side
 		const int16_t bottomY = (newY + size);
 
-		// Find which tile the player's new bottom side is in
 		const int16_t bottomTileY = (bottomY / tileHeight);
 
-		// Find the tile the player is trying to move into
 		const TileType bottomTile = MapData::getTile(tileX, bottomTileY);
 
 		if(isSolid(bottomTile))
 		{
-			// Adjust the player's position to prevent collision
-			newY = ((bottomTileY * tileHeight) - size);
+			  newY = ((bottomTileY * tileHeight) - size);
 		}
 
-		// Find the x coordinate of the player's new top side
 		const int16_t topY = ((newY - size) - 1);
 
-		// Find which tile the player's new top side is in
 		const int16_t topTileY = (topY / tileHeight);
 
-		// Find the tile the player is trying to move into
 		const TileType topTile = MapData::getTile(tileX, topTileY);
 
-		// If the tile is solid
 		if(isSolid(topTile))
 		{
-			// Adjust the player's position to prevent collision
-			newY = (((topTileY + 1) * tileHeight) + size);
+			  newY = (((topTileY + 1) * tileHeight) + size);
 		}
-
-    if (isPlayerLeft && newX <= 0 || !isPlayerLeft && newX >= 119)
-        xVelocity = 0;
 
     x = ((newX > size) ? newX : size);
     y = ((newY > size) ? newY : size);
@@ -113,7 +97,7 @@ void Camera::updateCamera()
 
     if (!isLeft && !isRight)
     {
-        x += player.xVelocity;
+        x = (player.x - (Arduboy2::width() / 2));
     }
 }
 
