@@ -38,8 +38,8 @@ void Game::update()
             updateGame();
             drawMap();
             player.updatePlayer();
-            player.drawPlayer();
             camera.updateCamera();
+            player.drawPlayer();
 
             if (arduboy.justPressed(A_BUTTON)) {MapData::currentMapData = MapData::map1Data;}
                 break;

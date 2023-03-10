@@ -10,13 +10,11 @@ class Player
     {
         static constexpr float gravity = 0.001;
         static constexpr float friction = 0.92;
-
-        static const float cutOffPoint = 0.018;
     };
 
     static constexpr uint8_t size = 8;
 
-    static constexpr float speed = 0.15;
+    static constexpr float speed = 0.13;
 
     bool isPlayerLeft;
 

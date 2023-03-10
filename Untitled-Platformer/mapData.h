@@ -71,11 +71,6 @@ namespace MapData
 
     extern const TileType (*currentMapData)[mapWidth];
 
-    extern uint8_t width;
-    extern uint8_t height;
-
-    extern const TileType *data;
-
     extern size_t getIndex(float x, float y);
     extern TileType getTile(float x, float y);
 }

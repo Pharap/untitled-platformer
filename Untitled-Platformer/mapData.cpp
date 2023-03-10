@@ -4,19 +4,16 @@ namespace MapData
 {
     const TileType (*currentMapData)[MapData::mapWidth] = map0Data;
 
-    const TileType *data = nullptr;
-
-    uint8_t width = 0;
-    uint8_t height = 0;
+    const TileType *data = &currentMapData[0][0];
 
     size_t getIndex(float x, float y)
 	  {
-		    return ((y * width) + x);
+		    return ((y * mapWidth) + x);
 	  }
 
     TileType getTile(float x, float y)
 	  {
-		    if((x > width) || (y > height))
+		    if((x > mapWidth) || (y > mapHeight))
 		    {
 			      return TileType::Sky;
 		    }

@@ -27,7 +27,7 @@ void Player::updatePlayer()
     const float tileX = (newX / tileWidth);
     const float tileY = (newY / tileHeight);
 
-    const float rightX = (newX + halfTileWidth);
+    const float rightX = (newX + size);
 
     const float rightTileX = (rightX / tileWidth);
 
@@ -35,10 +35,10 @@ void Player::updatePlayer()
 
     if(isSolid(rightTile))
 		{
-			  newX = ((rightTileX * tileWidth) - halfTileWidth);
+			  newX = ((rightTileX * tileWidth) - size);
 		}
 
-    const int16_t leftX = ((newX - halfTileWidth) - 1);
+    const int16_t leftX = ((newX - size) - 1);
 		
 		// Find which tile the player's new left side is in
 		const int16_t leftTileX = (leftX / tileWidth);
@@ -50,11 +50,11 @@ void Player::updatePlayer()
 		if(isSolid(leftTile))
 		{
 			// Adjust the player's position to prevent collision
-			newX = (((leftTileX + 1) * tileWidth) + halfTileWidth);
+			newX = (((leftTileX + 1) * tileWidth) + size);
 		}
 
 		// Find the x coordinate of the player's new bottom side
-		const int16_t bottomY = (newY + halfTileHeight);
+		const int16_t bottomY = (newY + size);
 
 		// Find which tile the player's new bottom side is in
 		const int16_t bottomTileY = (bottomY / tileHeight);
@@ -65,11 +65,11 @@ void Player::updatePlayer()
 		if(isSolid(bottomTile))
 		{
 			// Adjust the player's position to prevent collision
-			newY = ((bottomTileY * tileHeight) - halfTileHeight);
+			newY = ((bottomTileY * tileHeight) - size);
 		}
 
 		// Find the x coordinate of the player's new top side
-		const int16_t topY = ((newY - halfTileHeight) - 1);
+		const int16_t topY = ((newY - size) - 1);
 
 		// Find which tile the player's new top side is in
 		const int16_t topTileY = (topY / tileHeight);
@@ -81,17 +81,14 @@ void Player::updatePlayer()
 		if(isSolid(topTile))
 		{
 			// Adjust the player's position to prevent collision
-			newY = (((topTileY + 1) * tileHeight) + halfTileHeight);
+			newY = (((topTileY + 1) * tileHeight) + size);
 		}
 
     if (isPlayerLeft && newX <= 0 || !isPlayerLeft && newX >= 119)
         xVelocity = 0;
 
-    if (newX >= 58 && camera.isLeft || newX <= 58 && camera.isRight)
-        newX = 58;
-
-    x = ((newX > halfTileHeight) ? newX : halfTileWidth);
-    y = ((newY > halfTileHeight) ? newY : halfTileHeight);
+    x = ((newX > size) ? newX : size);
+    y = ((newY > size) ? newY : size);
 }
 
 void Camera::updateCamera()
@@ -116,8 +113,7 @@ void Camera::updateCamera()
 
     if (!isLeft && !isRight)
     {
-      x += player.xVelocity;
-      y += player.yVelocity;
+        x += player.xVelocity;
     }
 }
 
@@ -140,5 +136,5 @@ void Player::playerInput()
 
 void Player::drawPlayer()
 {
-    Sprites::drawOverwrite(x, y, playerSprite, isPlayerLeft);
+    Sprites::drawOverwrite(x - camera.x, y - camera.y, playerSprite, isPlayerLeft);
 }
