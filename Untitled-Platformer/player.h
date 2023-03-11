@@ -8,7 +8,7 @@ class Player
 
     struct Physics
     {
-        static constexpr float gravity = 0.001;
+        static constexpr float gravity = 0.01;
         static constexpr float friction = 0.92;
     };
 
@@ -17,6 +17,9 @@ class Player
     static constexpr float speed = 0.13;
 
     bool isPlayerLeft;
+
+    bool canMoveRight;
+    bool canMoveLeft;
 
     void playerInput();
 
