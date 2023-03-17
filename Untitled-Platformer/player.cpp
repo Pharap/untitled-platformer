@@ -34,6 +34,8 @@ void Player::updatePlayer()
 
     if(isSolid(rightTile))
 		{
+        newX = (rightTileX - size);
+
 			  xVelocity = 0;
 
         canMoveRight = false;
@@ -44,14 +46,18 @@ void Player::updatePlayer()
        canMoveRight = true;
     }
 
-    const int16_t leftX = ((newX - size) - 1);
+    game.arduboy.println(rightTileX);
+
+    const float leftX = (newX - size);
 		
-		const int16_t leftTileX = (leftX / tileWidth);
+		const float leftTileX = (leftX / tileWidth);
 
 		const TileType leftTile = MapData::getTile(leftTileX, tileY);
 
 		if(isSolid(leftTile))
 		{
+        newX = (leftTileX + size);
+
 			  xVelocity = 0;
 
         canMoveLeft = false;
@@ -62,30 +68,34 @@ void Player::updatePlayer()
       canMoveLeft = true;
     }
 
-		const int16_t bottomY = (newY + size);
+		const float bottomY = (newY + size);
 
-		const int16_t bottomTileY = (bottomY / tileHeight);
+		const float bottomTileY = (bottomY / tileHeight);
 
 		const TileType bottomTile = MapData::getTile(tileX, bottomTileY);
 
 		if(isSolid(bottomTile))
 		{
+        newY = (bottomTileY - size);
+
 			  yVelocity = 0;
 		}
 
-		const int16_t topY = ((newY - size) - 1);
+		const float topY = (newY - size);
 
-		const int16_t topTileY = (topY / tileHeight);
+		const float topTileY = (topY / tileHeight);
 
 		const TileType topTile = MapData::getTile(tileX, topTileY);
 
 		if(isSolid(topTile))
 		{
+        newY = (topTileY + size);
+
 			  yVelocity = 0;
 		}
 
-    x = ((newX > size) ? newX : size);
-    y = ((newY > size) ? newY : size);
+    x = ((newX > 0) ? newX : 0);
+    y = ((newX > 0) ? newY : 0);
 }
 
 void Camera::updateCamera()
@@ -104,7 +114,7 @@ void Camera::updateCamera()
 
     if (isRight)
     {
-        if (player.x <= 58)
+        if (player.x <= 128)
             isRight = false;
     }
 
