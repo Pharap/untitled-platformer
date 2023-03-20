@@ -8,7 +8,7 @@ class Player
 
     struct Physics
     {
-        static constexpr float gravity = 0.01;
+        static constexpr float gravity = 0.03;
         static constexpr float friction = 0.92;
     };
 

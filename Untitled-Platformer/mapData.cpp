@@ -13,11 +13,6 @@ namespace MapData
 
     TileType getTile(float x, float y)
 	  {
-		    if((x > mapWidth) || (y > mapHeight))
-		    {
-			      return TileType::Sky;
-		    }
-
 		    const size_t index = getIndex(x, y);
 
 		    const TileType * tilePointer = &data[index];

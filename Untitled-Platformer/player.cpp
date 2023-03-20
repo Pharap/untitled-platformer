@@ -34,7 +34,7 @@ void Player::updatePlayer()
 
     if(isSolid(rightTile))
 		{
-        newX = (rightTileX - size);
+        newX = (rightX - size);
 
 			  xVelocity = 0;
 
@@ -46,9 +46,7 @@ void Player::updatePlayer()
        canMoveRight = true;
     }
 
-    game.arduboy.println(rightTileX);
-
-    const float leftX = (newX - size);
+    const float leftX = (newX);
 		
 		const float leftTileX = (leftX / tileWidth);
 
@@ -56,7 +54,7 @@ void Player::updatePlayer()
 
 		if(isSolid(leftTile))
 		{
-        newX = (leftTileX + size);
+        newX = (leftX + size);
 
 			  xVelocity = 0;
 
@@ -68,6 +66,8 @@ void Player::updatePlayer()
       canMoveLeft = true;
     }
 
+    game.arduboy.println(leftX);
+
 		const float bottomY = (newY + size);
 
 		const float bottomTileY = (bottomY / tileHeight);
@@ -76,12 +76,12 @@ void Player::updatePlayer()
 
 		if(isSolid(bottomTile))
 		{
-        newY = (bottomTileY - size);
+        newY = (bottomY - size);
 
 			  yVelocity = 0;
 		}
 
-		const float topY = (newY - size);
+		const float topY = (newY);
 
 		const float topTileY = (topY / tileHeight);
 
@@ -89,13 +89,13 @@ void Player::updatePlayer()
 
 		if(isSolid(topTile))
 		{
-        newY = (topTileY + size);
+        newY = (topY + size);
 
 			  yVelocity = 0;
 		}
 
-    x = ((newX > 0) ? newX : 0);
-    y = ((newX > 0) ? newY : 0);
+    x = newX;
+    y = newY;
 }
 
 void Camera::updateCamera()
@@ -128,7 +128,7 @@ void Player::playerInput()
 {   
     if (game.arduboy.pressed(RIGHT_BUTTON))
     {
-        if (canMoveRight) 
+        if (true) 
             xVelocity += speed;
 
         isPlayerLeft = false;
@@ -136,7 +136,7 @@ void Player::playerInput()
 
     if (game.arduboy.pressed(LEFT_BUTTON))
     {
-        if (canMoveLeft)
+        if (true)
             xVelocity -= speed;
     
         isPlayerLeft = true;
@@ -144,6 +144,7 @@ void Player::playerInput()
 
     if (game.arduboy.justPressed(UP_BUTTON))
     {
+        yVelocity = 0;
         yVelocity -= 1;
     }
 }
