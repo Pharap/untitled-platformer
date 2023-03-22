@@ -23,10 +23,10 @@ void Player::updatePlayer()
     float newX = (x + xVelocity);
     float newY = (y + yVelocity);
 
-    const float tileX = (newX / tileWidth);
-    const float tileY = (newY / tileHeight);
+    const int16_t tileX = (newX / tileWidth);
+    const int16_t tileY = (newY / tileHeight);
 
-    const int16_t rightX = (newX + size);
+    const int16_t rightX = (newX + halfTileWidth);
 
     const int16_t rightTileX = (rightX / tileWidth);
 
@@ -34,7 +34,7 @@ void Player::updatePlayer()
 
     if(isSolid(rightTile))
 		{
-        newX = ((rightTileX * tileWidth) - size);
+        newX = ((rightTileX * tileWidth) - halfTileWidth);
 
 			  xVelocity = 0;
 
@@ -46,7 +46,7 @@ void Player::updatePlayer()
        canMoveRight = true;
     }
 
-    const int16_t leftX = (newX);
+    const int16_t leftX = ((newX - halfTileWidth) - 1);
 		
 		const int16_t leftTileX = (leftX / tileWidth);
 
@@ -54,7 +54,7 @@ void Player::updatePlayer()
 
 		if(isSolid(leftTile))
 		{
-        newX = (leftTileX * tileWidth);
+        newX = (((leftTileX + 1) * tileWidth) + halfTileWidth);
 
 			  xVelocity = 0;
 
@@ -66,7 +66,7 @@ void Player::updatePlayer()
       canMoveLeft = true;
     }
 
-		const int16_t bottomY = (newY + size);
+		const int16_t bottomY = (newY + halfTileHeight);
 
 		const int16_t bottomTileY = (bottomY / tileHeight);
 
@@ -74,12 +74,12 @@ void Player::updatePlayer()
 
 		if(isSolid(bottomTile))
 		{
-        newY = ((bottomTileY * tileHeight) - size);
+        newY = ((bottomTileY * tileHeight) - halfTileHeight);
 
 			  yVelocity = 0;
 		}
 
-		const int16_t topY = (newY);
+		const int16_t topY = ((newY - halfTileHeight) - 1);
 
 		const int16_t topTileY = (topY / tileHeight);
 
@@ -87,13 +87,13 @@ void Player::updatePlayer()
 
 		if(isSolid(topTile))
 		{
-        //newY = (topY + 1);
+        newY = (((topTileY + 1) * tileHeight) + halfTileWidth);
 
-			  //yVelocity = 0;
+			  yVelocity = 0;
 		}
 
-    x = newX;
-    y = newY;
+    x = ((newX > halfTileHeight) ? newX : halfTileWidth);
+		y = ((newY > halfTileHeight) ? newY : halfTileHeight);
 }
 
 void Camera::updateCamera()
@@ -143,11 +143,11 @@ void Player::playerInput()
     if (game.arduboy.justPressed(UP_BUTTON))
     {
         yVelocity = 0;
-        yVelocity -= 1;
+        yVelocity -= 1.2;
     }
 }
 
 void Player::drawPlayer()
 {
-    Sprites::drawOverwrite(x - camera.x, y - camera.y, playerSprite, isPlayerLeft);
+    Sprites::drawOverwrite(x - camera.x - halfTileWidth, y - camera.y - halfTileHeight, playerSprite, isPlayerLeft);
 }

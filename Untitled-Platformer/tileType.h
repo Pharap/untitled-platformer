@@ -21,6 +21,9 @@ enum class TileType : uint8_t
 constexpr uint8_t tileWidth = 8;
 constexpr uint8_t tileHeight = 8;
 
+constexpr uint8_t halfTileWidth = 4;
+constexpr uint8_t halfTileHeight = 4;
+
 constexpr uint8_t getTileIndex(TileType tileType)
 {
     return static_cast<uint8_t>(tileType);
