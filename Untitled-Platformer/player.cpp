@@ -34,7 +34,7 @@ void Player::updatePlayer()
 
     if(isSolid(rightTile))
 		{
-        newX = (rightX - size);
+        newX = ((rightTileX * tileWidth) - size);
 
 			  xVelocity = 0;
 
@@ -54,7 +54,7 @@ void Player::updatePlayer()
 
 		if(isSolid(leftTile))
 		{
-        newX = (leftX + 1);
+        newX = (leftTileX * tileWidth);
 
 			  xVelocity = 0;
 
@@ -74,7 +74,7 @@ void Player::updatePlayer()
 
 		if(isSolid(bottomTile))
 		{
-        newY = (bottomY - size);
+        newY = ((bottomTileY * tileHeight) - size);
 
 			  yVelocity = 0;
 		}
