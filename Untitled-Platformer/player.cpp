@@ -29,15 +29,15 @@ void Player::updatePosition()
     constexpr uint8_t halfHeight = (height / 2);
 
     // Figure out the point that the player should be moving to
-    auto newX = ((this->x + this->xVelocity) + halfWidth);
-    auto newY = ((this->y + this->yVelocity) + halfHeight);
+    auto newX = (this->x + this->xVelocity);
+    auto newY = (this->y + this->yVelocity);
 
     // Figure out the tile coordinate that the player should be moving to
-    const int16_t tileX = (newX / tileWidth);
-    const int16_t tileY = (newY / tileHeight);
+    const int16_t tileX = ((newX + halfWidth) / tileWidth);
+    const int16_t tileY = ((newY + halfHeight) / tileHeight);
 
     // Find the x coordinate of the player's new right side
-    const int16_t rightX = (newX + halfTileWidth);
+    const int16_t rightX = (newX + this->width);
 
     // Find which tile the player's new right side is in
     const int16_t rightTileX = (rightX / tileWidth);
@@ -49,11 +49,11 @@ void Player::updatePosition()
     if(isSolid(rightTile))
     {
         // Adjust the player's position to prevent collision
-        newX = ((rightTileX * tileWidth) - halfTileWidth);
+        newX = ((rightTileX * tileWidth) - this->width);
     }
     
     // Find the x coordinate of the player's new left side
-    const int16_t leftX = ((newX - halfTileWidth) - 1);
+    const int16_t leftX = (newX - 1);
     
     // Find which tile the player's new left side is in
     const int16_t leftTileX = (leftX / tileWidth);
@@ -65,11 +65,11 @@ void Player::updatePosition()
     if(isSolid(leftTile))
     {
         // Adjust the player's position to prevent collision
-        newX = (((leftTileX + 1) * tileWidth) + halfTileWidth);
+        newX = ((leftTileX + 1) * tileWidth);
     }
 
     // Find the x coordinate of the player's new bottom side
-    const int16_t bottomY = (newY + halfTileHeight);
+    const int16_t bottomY = (newY + this->height);
 
     // Find which tile the player's new bottom side is in
     const int16_t bottomTileY = (bottomY / tileHeight);
@@ -80,11 +80,11 @@ void Player::updatePosition()
     if(isSolid(bottomTile))
     {
         // Adjust the player's position to prevent collision
-        newY = ((bottomTileY * tileHeight) - halfTileHeight);
+        newY = ((bottomTileY * tileHeight) - this->height);
     }
 
     // Find the x coordinate of the player's new top side
-    const int16_t topY = ((newY - halfTileHeight) - 1);
+    const int16_t topY = (newY - 1);
 
     // Find which tile the player's new top side is in
     const int16_t topTileY = (topY / tileHeight);
@@ -96,13 +96,13 @@ void Player::updatePosition()
     if(isSolid(topTile))
     {
         // Adjust the player's position to prevent collision
-        newY = (((topTileY + 1) * tileHeight) + halfTileHeight);
+        newY = ((topTileY + 1) * tileHeight);
     }
 
     // Assign the player's new position
     // Whilst preventing the position from going out of bounds
-    this->x = (((newX > halfTileWidth) ? newX : halfTileWidth) - halfWidth);
-    this->y = (((newY > halfTileHeight) ? newY : halfTileHeight) - halfHeight);
+    this->x = ((newX > 0) ? newX : 0);
+    this->y = ((newY > 0) ? newY : 0);
 }
 
 void Camera::updateCamera()
