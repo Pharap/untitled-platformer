@@ -149,5 +149,5 @@ void Player::playerInput()
 
 void Player::drawPlayer()
 {
-    Sprites::drawOverwrite(x - camera.x - halfTileWidth, y - camera.y - halfTileHeight, playerSprite, isPlayerLeft);
+    Sprites::drawOverwrite(x - camera.x, y - camera.y, playerSprite, isPlayerLeft);
 }
