@@ -20,80 +20,89 @@ void Player::updatePlayer()
     yVelocity += Physics::gravity;
     xVelocity *= Physics::friction;
 
-    float newX = (x + xVelocity);
-    float newY = (y + yVelocity);
+    this->updatePosition();
+}
 
+void Player::updatePosition()
+{
+    constexpr uint8_t halfWidth = (width / 2);
+    constexpr uint8_t halfHeight = (height / 2);
+
+    // Figure out the point that the player should be moving to
+    auto newX = ((this->x + this->xVelocity) + halfWidth);
+    auto newY = ((this->y + this->yVelocity) + halfHeight);
+
+    // Figure out the tile coordinate that the player should be moving to
     const int16_t tileX = (newX / tileWidth);
     const int16_t tileY = (newY / tileHeight);
 
+    // Find the x coordinate of the player's new right side
     const int16_t rightX = (newX + halfTileWidth);
 
+    // Find which tile the player's new right side is in
     const int16_t rightTileX = (rightX / tileWidth);
 
+    // Find the tile the player is trying to move into
     const TileType rightTile = MapData::getTile(rightTileX, tileY);
 
+    // If the tile is solid
     if(isSolid(rightTile))
-		{
+    {
+        // Adjust the player's position to prevent collision
         newX = ((rightTileX * tileWidth) - halfTileWidth);
-
-			  xVelocity = 0;
-
-        canMoveRight = false;
-		}
+    }
     
-    else
-    {
-       canMoveRight = true;
-    }
-
+    // Find the x coordinate of the player's new left side
     const int16_t leftX = ((newX - halfTileWidth) - 1);
-		
-		const int16_t leftTileX = (leftX / tileWidth);
+    
+    // Find which tile the player's new left side is in
+    const int16_t leftTileX = (leftX / tileWidth);
 
-		const TileType leftTile = MapData::getTile(leftTileX, tileY);
+    // Find the tile the player is trying to move into
+    const TileType leftTile = MapData::getTile(leftTileX, tileY);
 
-		if(isSolid(leftTile))
-		{
-        newX = (((leftTileX + 1) * tileWidth) + halfTileWidth);
-
-			  xVelocity = 0;
-
-        canMoveLeft = false;
-		}
-
-    else
+    // If the tile is solid
+    if(isSolid(leftTile))
     {
-      canMoveLeft = true;
+        // Adjust the player's position to prevent collision
+        newX = (((leftTileX + 1) * tileWidth) + halfTileWidth);
     }
 
-		const int16_t bottomY = (newY + halfTileHeight);
+    // Find the x coordinate of the player's new bottom side
+    const int16_t bottomY = (newY + halfTileHeight);
 
-		const int16_t bottomTileY = (bottomY / tileHeight);
+    // Find which tile the player's new bottom side is in
+    const int16_t bottomTileY = (bottomY / tileHeight);
 
-		const TileType bottomTile = MapData::getTile(tileX, bottomTileY);
+    // Find the tile the player is trying to move into
+    const TileType bottomTile = MapData::getTile(tileX, bottomTileY);
 
-		if(isSolid(bottomTile))
-		{
+    if(isSolid(bottomTile))
+    {
+        // Adjust the player's position to prevent collision
         newY = ((bottomTileY * tileHeight) - halfTileHeight);
+    }
 
-			  yVelocity = 0;
-		}
+    // Find the x coordinate of the player's new top side
+    const int16_t topY = ((newY - halfTileHeight) - 1);
 
-		const int16_t topY = ((newY - halfTileHeight) - 1);
+    // Find which tile the player's new top side is in
+    const int16_t topTileY = (topY / tileHeight);
 
-		const int16_t topTileY = (topY / tileHeight);
+    // Find the tile the player is trying to move into
+    const TileType topTile = MapData::getTile(tileX, topTileY);
 
-		const TileType topTile = MapData::getTile(tileX, topTileY);
+    // If the tile is solid
+    if(isSolid(topTile))
+    {
+        // Adjust the player's position to prevent collision
+        newY = (((topTileY + 1) * tileHeight) + halfTileHeight);
+    }
 
-		if(isSolid(topTile))
-		{
-        newY = (((topTileY + 1) * tileHeight) + halfTileWidth);
-
-			  yVelocity = 0;
-		}
-
-    x = ((newX > halfTileHeight) ? newX : halfTileWidth);
-		y = ((newY > halfTileHeight) ? newY : halfTileHeight);
+    // Assign the player's new position
+    // Whilst preventing the position from going out of bounds
+    this->x = (((newX > halfTileWidth) ? newX : halfTileWidth) - halfWidth);
+    this->y = (((newY > halfTileHeight) ? newY : halfTileHeight) - halfHeight);
 }
 
 void Camera::updateCamera()

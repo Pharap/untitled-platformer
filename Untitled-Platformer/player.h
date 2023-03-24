@@ -12,6 +12,9 @@ class Player
         static constexpr float friction = 0.92;
     };
 
+    static constexpr uint8_t width = 8;
+    static constexpr uint8_t height = 8;
+
     static constexpr uint8_t size = 8;
 
     static constexpr float speed = 0.13;
@@ -33,6 +36,9 @@ class Player
 
     void updatePlayer();
     void drawPlayer();
+
+private:
+    void updatePosition();
 };
 
 extern Player player;
