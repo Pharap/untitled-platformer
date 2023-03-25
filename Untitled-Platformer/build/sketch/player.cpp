@@ -1,3 +1,4 @@
+#line 1 "/Users/om/Downloads/ARDUBOY/Untitled-Platformer/player.cpp"
 #include "player.h"
 #include "game.h"
 #include "sprites.h"

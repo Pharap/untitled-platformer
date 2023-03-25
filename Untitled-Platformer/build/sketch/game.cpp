@@ -1,3 +1,4 @@
+#line 1 "/Users/om/Downloads/ARDUBOY/Untitled-Platformer/game.cpp"
 #include "game.h"
 #include "tileType.h"
 #include "mapData.h"

@@ -1,3 +1,4 @@
+#line 1 "/Users/om/Downloads/ARDUBOY/Untitled-Platformer/player.h"
 #pragma once
 #include <stdint.h>
 #include <Arduboy2.h>

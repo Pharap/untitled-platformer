@@ -1,3 +1,4 @@
+#line 1 "/Users/om/Downloads/ARDUBOY/Untitled-Platformer/mapData.cpp"
 #include "mapData.h"
 
 namespace MapData
