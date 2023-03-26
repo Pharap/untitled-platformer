@@ -2,20 +2,18 @@
 
 namespace MapData
 {
-    TileType const (*currentMapData)[MapData::mapWidth] = map0Data;
+    const TileType (*currentMapData)[mapWidth] = map0Data;
 
-    TileType const *data = &currentMapData[0][0];
-
-    size_t getIndex(float x, float y)
+    size_t getIndex(int16_t x, int16_t y)
 	  {
 		    return ((y * mapWidth) + x);
 	  }
 
-    TileType getTile(float x, float y)
+    TileType getTile(int16_t x, int16_t y)
 	  {
-		    size_t const index = getIndex(x, y);
+		    const size_t index = getIndex(x, y);
 
-		    TileType const * tilePointer = &data[index];
+		    const TileType * tilePointer = currentMapData[index];
 
 		    return readTileTypeFromProgmem(tilePointer);
 	  }

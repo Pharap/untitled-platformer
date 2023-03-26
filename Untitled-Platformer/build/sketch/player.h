@@ -15,7 +15,7 @@ class Player
 
     static constexpr uint8_t size = 8;
 
-    static constexpr float speed = 1.1;
+    static constexpr float speed = 0.13;
 
     static constexpr float thrust = 1.2;
 

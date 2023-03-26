@@ -20,68 +20,62 @@ void Player::updatePlayer()
     yVelocity += Physics::gravity;
     xVelocity *= Physics::friction;
 
-    float newX = ((x + xVelocity) + halfTileWidth);
-    float newY = ((y + yVelocity) + halfTileHeight);
+	auto newX = (this->x + this->xVelocity);
+    auto newY = (this->y + this->yVelocity);
 
-    const int16_t tileX = (newX / tileWidth);
-    const int16_t tileY = (newY / tileHeight);
+    const int16_t tileX = ((newX + halfTileWidth) / tileWidth);
+    const int16_t tileY = ((newY + halfTileHeight) / tileHeight);
 
-    const int16_t rightX = (newX + halfTileWidth);
+    const int16_t rightX = (newX + this->size);
 
     const int16_t rightTileX = (rightX / tileWidth);
 
     const TileType rightTile = MapData::getTile(rightTileX, tileY);
 
     if(isSolid(rightTile))
-	{
-        newX = ((rightTileX * tileWidth) - halfTileWidth);
-
+    {
+        newX = ((rightTileX * tileWidth) - this->size);
 		xVelocity = 0;
-	}
+    }
+    
+    const int16_t leftX = (newX);
+    
+    const int16_t leftTileX = (leftX / tileWidth);
 
-    const int16_t leftX = ((newX - halfTileWidth) - 1);
-		
-	const int16_t leftTileX = (leftX / tileWidth);
+    const TileType leftTile = MapData::getTile(leftTileX, tileY);
 
-	const TileType leftTile = MapData::getTile(leftTileX, tileY);
-
-	if(isSolid(leftTile))
-	{
-        newX = (((leftTileX + 1) * tileWidth) + halfTileWidth);
-
+    if(isSolid(leftTile))
+    {
+        newX = ((leftTileX + 1) * tileWidth);
 		xVelocity = 0;
-	}
+    }
 
-	game.arduboy.println(static_cast<uint8_t>(leftTile));
+    const int16_t bottomY = (newY + this->size);
 
-	const int16_t bottomY = (newY + halfTileHeight);
+    const int16_t bottomTileY = (bottomY / tileHeight);
 
-	const int16_t bottomTileY = (bottomY / tileHeight);
+    const TileType bottomTile = MapData::getTile(tileX, bottomTileY);
 
-	const TileType bottomTile = MapData::getTile(tileX, bottomTileY);
-
-	if(isSolid(bottomTile))
-	{
-    	newY = ((bottomTileY * tileHeight) - halfTileHeight);
-
+    if(isSolid(bottomTile))
+    {
+        newY = ((bottomTileY * tileHeight) - this->size);
 		yVelocity = 0;
-	}
+    }
 
-	const int16_t topY = ((newY - halfTileHeight) - 1);
+    const int16_t topY = (newY - 1);
 
-	const int16_t topTileY = (topY / tileHeight);
+    const int16_t topTileY = (topY / tileHeight);
 
-	const TileType topTile = MapData::getTile(tileX, topTileY);
+    const TileType topTile = MapData::getTile(tileX, topTileY);
 
-	if(isSolid(topTile))
-	{
-        newY = (((topTileY + 1) * tileHeight) + halfTileWidth);
-
+    if(isSolid(topTile))
+    {
+        newY = ((topTileY + 1) * tileHeight);
 		yVelocity = 0;
-	}
+    }
 
-    x = (((newX > halfTileWidth) ? newX : halfTileWidth) - halfTileWidth);
-    y = (((newY > halfTileHeight) ? newY : halfTileHeight) - halfTileHeight);
+    this->x = ((newX > 0) ? newX : 0);
+    this->y = ((newY > 0) ? newY : 0);
 }
 
 void Camera::updateCamera()
