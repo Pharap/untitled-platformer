@@ -15,6 +15,7 @@ void Player::updatePlayer()
 
     game.arduboy.setCursor(0, 0);
     game.arduboy.println(x);
+	game.arduboy.println(y);
     game.arduboy.println(xVelocity);
     game.arduboy.println(yVelocity);
 
@@ -58,10 +59,20 @@ void Player::updatePlayer()
     const TileType bottomTile = MapData::getTile(tileX, bottomTileY);
 
     if(isSolid(bottomTile))
-    {
-        newY = ((bottomTileY * tileHeight) - this->size);
+    {	
+		newY = ((bottomTileY * tileHeight) - this->size);
 		yVelocity = 0;
+
+		grounded = true;
     }
+
+	else
+	{
+		if (game.arduboy.everyXFrames(10))
+			grounded = false;
+	}
+
+	game.arduboy.println(static_cast<uint8_t>(bottomTile));
 
     const int16_t topY = (newY - 1);
 
@@ -121,10 +132,13 @@ void Player::playerInput()
         isPlayerLeft = true;
     }
 
-    if (game.arduboy.justPressed(UP_BUTTON))
-    {
-        yVelocity = 0;
-        yVelocity -= thrust;
+    if (game.arduboy.pressed(UP_BUTTON))
+    {    
+		if (grounded)
+		{
+			yVelocity = 0;
+			yVelocity -= thrust;
+		}
     }
 }
 

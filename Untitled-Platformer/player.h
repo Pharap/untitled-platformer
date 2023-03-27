@@ -20,6 +20,8 @@ class Player
 
     bool isPlayerLeft;
 
+	bool grounded;
+
     void playerInput();
 
     public:
