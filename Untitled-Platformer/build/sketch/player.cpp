@@ -132,7 +132,7 @@ void Player::playerInput()
         isPlayerLeft = true;
     }
 
-    if (game.arduboy.pressed(UP_BUTTON))
+    if (game.arduboy.justPressed(UP_BUTTON))
     {    
 		if (grounded)
 		{

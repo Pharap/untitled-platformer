@@ -73,7 +73,7 @@ void Game::drawMap()
 
                 continue;
 
-             TileType tileType = readTileTypeFromProgmem(&MapData::mapData[tileY][tileX]);
+            TileType tileType = readTileTypeFromProgmem(&MapData::mapData[tileY][tileX]);
 
             uint8_t tileIndex = getTileIndex(tileType);
 

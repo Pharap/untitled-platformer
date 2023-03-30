@@ -7,8 +7,16 @@ namespace MapData
     TileType getTile(int16_t x, int16_t y)
 	{
 
-		const TileType * tilePointer = &mapData[y][x];
+		if((x >= fullMapWidth) || (y >= fullMapHeight))
+		{
+			return TileType::Sky;
+		}
 
-		return readTileTypeFromProgmem(tilePointer);
+		else
+		{
+			const TileType * tilePointer = &mapData[y][x];
+
+			return readTileTypeFromProgmem(tilePointer);
+		}
 	}
 }
