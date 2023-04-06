@@ -15,7 +15,11 @@ enum class TileType : uint8_t
     PixelLeft,
     PixelRight,
     LeftWallRightPixel,
-    RightWallLeftPixel
+    RightWallLeftPixel,
+	Block,
+	SidewaysTube,
+	LeftCap,
+	RightCap,
 };
 
 constexpr uint8_t tileWidth = 8;

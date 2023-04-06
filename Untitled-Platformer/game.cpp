@@ -41,7 +41,7 @@ void Game::update()
             camera.updateCamera();
             player.drawPlayer();
 
-            if (arduboy.justPressed(A_BUTTON)) {MapData::mapData = MapData::map1Data;}
+            if (arduboy.justPressed(A_BUTTON)) {MapData::data = MapData::map1Data;}
                 break;
 
         case GameState::Gameover:
@@ -72,7 +72,7 @@ void Game::drawMap()
 
                 continue;
 
-            TileType tileType = readTileTypeFromProgmem(&MapData::mapData[tileY][tileX]);
+            TileType tileType = readTileTypeFromProgmem(MapData::data[tileY][tileX]);
 
             uint8_t tileIndex = getTileIndex(tileType);
 

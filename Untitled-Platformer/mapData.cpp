@@ -2,21 +2,20 @@
 
 namespace MapData
 {
-    const TileType (*mapData)[mapWidth] = map0Data;
+    const TileType *data[mapHeight][mapWidths[0]];
+
+	const uint8_t *currentMapWidth = &mapWidths[0];
 
     TileType getTile(int16_t x, int16_t y)
 	{
 
-		if((x >= fullMapWidth) || (y >= fullMapHeight))
+		if ((y <= 0) || (x >= mapWidth) || (y >= mapHeight))
 		{
 			return TileType::Sky;
 		}
 
-		else
-		{
-			const TileType * tilePointer = &mapData[y][x];
+		const TileType *tilePointer = data[y][x];
 
-			return readTileTypeFromProgmem(tilePointer);
-		}
+		return readTileTypeFromProgmem(tilePointer);
 	}
 }

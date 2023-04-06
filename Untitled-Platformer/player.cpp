@@ -14,9 +14,7 @@ void Player::updatePlayer()
 
     game.arduboy.setCursor(0, 0);
     game.arduboy.println(x);
-	game.arduboy.println(y);
-    game.arduboy.println(xVelocity);
-    game.arduboy.println(yVelocity);
+	game.arduboy.println(camera.x);
 
     yVelocity += Physics::gravity;
     xVelocity *= Physics::friction;
@@ -33,7 +31,7 @@ void Player::updatePlayer()
 
     const TileType rightTile = MapData::getTile(rightTileX, tileY);
 
-    if(isSolid(rightTile))
+    if (isSolid(rightTile))
     {
         newX = ((rightTileX * tileWidth) - this->size);
 		xVelocity = 0;
@@ -45,7 +43,7 @@ void Player::updatePlayer()
 
     const TileType leftTile = MapData::getTile(leftTileX, tileY);
 
-    if(isSolid(leftTile))
+    if (isSolid(leftTile))
     {
         newX = ((leftTileX + 1) * tileWidth);
 		xVelocity = 0;
@@ -57,7 +55,7 @@ void Player::updatePlayer()
 
     const TileType bottomTile = MapData::getTile(tileX, bottomTileY);
 
-    if(isSolid(bottomTile))
+    if (isSolid(bottomTile))
     {	
 		newY = ((bottomTileY * tileHeight) - this->size);
 		yVelocity = 0;
@@ -67,11 +65,9 @@ void Player::updatePlayer()
 
 	else
 	{
-		if (game.arduboy.everyXFrames(10))
+		if (game.arduboy.everyXFrames(15))
 			grounded = false;
 	}
-
-	game.arduboy.println(static_cast<uint8_t>(bottomTile));
 
     const int16_t topY = (newY - 1);
 
@@ -79,14 +75,16 @@ void Player::updatePlayer()
 
     const TileType topTile = MapData::getTile(tileX, topTileY);
 
-    if(isSolid(topTile))
+    if (isSolid(topTile))
     {
         newY = ((topTileY + 1) * tileHeight);
-		yVelocity = 0;
+		
+		if (game.arduboy.everyXFrames(120))	
+			yVelocity = -yVelocity;
     }
 
     this->x = ((newX > 0) ? newX : 0);
-    this->y = ((newY > 0) ? newY : 0);
+    this->y = newY;
 }
 
 void Camera::updateCamera()
@@ -94,20 +92,23 @@ void Camera::updateCamera()
     if (x <= 0)
         isLeft = true;
 
-    if (x >= 64)
+    if (x >= (MapData::fullMapWidth - Arduboy2::width()))
         isRight = true;
 
     if (isLeft)
     {
-        if (player.x >= 58)
+        if (player.x >= 60)
             isLeft = false;
     }
 
     if (isRight)
     {
-        if (player.x <= 128)
+        if (player.x <= (MapData::fullMapWidth - 60))
             isRight = false;
     }
+
+	game.arduboy.println(MapData::fullMapWidth);
+	game.arduboy.println(MapData::mapWidth * tileWidth);
 
     if (!isLeft && !isRight)
     {
